@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title>Another blog</title>
+      <link href="/2018/04/07/Another-blog/"/>
+      <url>/2018/04/07/Another-blog/</url>
+      <content type="html"><![CDATA[<p>测试能否上传成功</p>]]></content>
+      
+      
+    </entry>
+    
+    <entry>
+      <title>测试</title>
+      <link href="/2018/04/07/%E6%B5%8B%E8%AF%95/"/>
+      <url>/2018/04/07/%E6%B5%8B%E8%AF%95/</url>
+      <content type="html"><![CDATA[<p>网站内链接</p><p></p><p><br><a href="https://cn.bing.com/" target="_blank" rel="noopener">测试链接</a></p><p></p>]]></content>
+      
+      
+    </entry>
+    
+    <entry>
+      <title>The First Blog</title>
+      <link href="/2018/02/04/The-First-Blog/"/>
+      <url>/2018/02/04/The-First-Blog/</url>
+      <content type="html"><![CDATA[<p>终于搭完博客了，git要学习一波！<br>网站内链接</p><p></p><p><br><a href="https://cn.bing.com/" target="_blank" rel="noopener">测试链接</a></p><p></p>]]></content>
+      
+      
+    </entry>
+    
+  
+  
+</search>
