@@ -12,31 +12,4 @@
         <tag>Dynamic Programming</tag>
       </tags>
   </entry>
-  <entry>
-    <title><![CDATA[Another blog]]></title>
-    <url>%2F2018%2F04%2F07%2FAnother-blog%2F</url>
-    <content type="text"><![CDATA[测试能否上传成功]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[测试]]></title>
-    <url>%2F2018%2F04%2F07%2F%E6%B5%8B%E8%AF%95%2F</url>
-    <content type="text"><![CDATA[网站内链接 测试链接]]></content>
-      <categories>
-        <category>test</category>
-      </categories>
-      <tags>
-        <tag>test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[The First Blog]]></title>
-    <url>%2F2018%2F02%2F04%2FThe-First-Blog%2F</url>
-    <content type="text"><![CDATA[终于搭完博客了，git要学习一波！网站内链接 测试链接]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
 </search>
