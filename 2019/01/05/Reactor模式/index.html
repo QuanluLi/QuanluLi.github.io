@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Luke的博客">
 <meta property="og:description" content="Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://github.com/QuanluLi/Pictures/blob/master/Reactor/Reactor_component.png">
-<meta property="og:image" content="https://github.com/QuanluLi/Pictures/blob/master/Reactor/Reactor_use.png">
-<meta property="og:updated_time" content="2019-01-08T03:13:39.209Z">
+<meta property="og:image" content="https://quanluli.github.io/img/Reactor/Reactor_component.png">
+<meta property="og:image" content="https://quanluli.github.io/img/Reactor/Reactor_use.png">
+<meta property="og:updated_time" content="2019-01-08T03:24:39.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reactor模式">
 <meta name="twitter:description" content="Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll">
-<meta name="twitter:image" content="https://github.com/QuanluLi/Pictures/blob/master/Reactor/Reactor_component.png">
+<meta name="twitter:image" content="https://quanluli.github.io/img/Reactor/Reactor_component.png">
 
 
 
@@ -388,7 +388,7 @@
 <li>可复用性强，Reactor与具体的业务逻辑无关，只与I/O调度有关，具有很高的复用性；</li>
 <li>编程简单，避免了多线程/多进程的切换开销。</li>
 </ul>
-<h2 id="Reactor模式组成"><a href="#Reactor模式组成" class="headerlink" title="Reactor模式组成"></a>Reactor模式组成</h2><p><img src="https://github.com/QuanluLi/Pictures/blob/master/Reactor/Reactor_component.png" alt="Reactor的组成" title="Reactor的组成"></p>
+<h2 id="Reactor模式组成"><a href="#Reactor模式组成" class="headerlink" title="Reactor模式组成"></a>Reactor模式组成</h2><p><img src="/img/Reactor/Reactor_component.png" alt="Reactor的组成" title="Reactor的组成"></p>
 <p>如图中所示，Reactor为时间反应器， Event Handler为时间处理器，Event Demultiplexer为时间分离器， Concrete Event Handler封装时间处理器， Handle为时间源。</p>
 <ul>
 <li>事件源（handler）：一般是描述符，由操作系统提供。可以使socket，文件描述符等。可以来自系统内部，也可以来自系统内部；</li>
@@ -397,7 +397,7 @@
 <li>事件处理器（Event Handler）：提供了一组能够处理对应事件的接口，这组接口事先由应用程序注册。</li>
 </ul>
 <h2 id="Reactor事件处理流程"><a href="#Reactor事件处理流程" class="headerlink" title="Reactor事件处理流程"></a>Reactor事件处理流程</h2><p>首先是事件注册部分，应用程序将期待注册的套接字描述符作为事件源，将对应的回调函数和该描述符注册到事件处理器上，然后将该事件处理器注册到事件反应器上。事件反应器将注册信息再次注册到事件分离器epoll中，在epoll中通过epoll_ctl进行添加描述符及事件，并层层返回注册结果；<br>然后是事件处理部分，事件反应器通过epoll_wait等待注册事件发生。一旦事件真的发生，epoll_wait将会返回，并将包含该事件的事件集返回到事件反应器，反应器根据事件源找到该事件的处理器，并根据事件类型调用之前在事件处理器中注册的回调函数，在回调函数中完成事件的处理。<br>根据Reactor模式的具体流程可知，应用程序只参与了最初的注册步骤，具体的等待事件发生和事件处理都由Reactor分配。因此， 在Reactor模式中，应用程序无须关心事件的来源和发生时间，只要完成回调函数和描述符的注册即可，事件的处理流程被Reactor控制翻转了。这一特性对应了设计模式中的好莱坞原则。</p>
-<h2 id="Reactor的使用"><a href="#Reactor的使用" class="headerlink" title="Reactor的使用"></a>Reactor的使用</h2><p><img src="https://github.com/QuanluLi/Pictures/blob/master/Reactor/Reactor_use.png" alt="Reactor的事件循环" title="Reactor的使用"></p>
+<h2 id="Reactor的使用"><a href="#Reactor的使用" class="headerlink" title="Reactor的使用"></a>Reactor的使用</h2><p><img src="/img/Reactor/Reactor_use.png" alt="Reactor的事件循环" title="Reactor的使用"></p>
 <p>在初始化阶段， 我们将服务器监听套接字及对应的处理函数注册到Reactor中，然后系统进入Reactor的大循环中等待事件的发生。<br>接下来，如果发生监听套接字可读事件，则表示有新连接产生。Reactor回调之前注册好的回调函数，即通过accept系统调用获取新连接的套接字，并将该连接的描述符和对应的处理函数注册到Reactor中。执行完监听套接字的处理函数后，若仍有事件未处理，则继续进入该事件对应的回调函数中进行处理；否则进入下一次事件循环中，继续调用epoll阻塞等待事件的发生；<br>这时，Reactor上已经注册了两类事件：监听套接字可读事件（代表新连接的产生）和连接套接字可读事件（代表有从客户端发来的数据）。<br>在接下来的循环中，如果到达的事件是监听套接字事件，则重复上面的步骤；若到达的是连接套接字事件，则Reactor会回调对应的连接套接字Handler。在这次调用中，先通过read系统调用读取收到的数据，然后进行具体的处理。处理结束后若还有事件待处理，则继续处理，否则进入下次循环，epoll阻塞等待事件的发生。<br>以上描述的是单线程中服务器使用Reactor模式建立新的客户端连接并接受、处理客户端数据的工作。Reactor满足了高并发和高性能的需求，同时实现了网络细节与业务逻辑的分离。在使用中只需要在不同事件对应的Handler中实现具体的业务逻辑即可。</p>
 
       
