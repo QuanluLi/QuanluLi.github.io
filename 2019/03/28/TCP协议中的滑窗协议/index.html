@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Network Programming," />
 
 
 
@@ -79,16 +79,22 @@
 
 
 
-<meta name="description" content="后端学习，算法学习">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Luke的博客">
-<meta property="og:url" content="https://quanluli.github.io/archives/2018/02/index.html">
+<meta name="description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
+<meta name="keywords" content="Network Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP协议中的滑窗协议（连续ARQ协议）">
+<meta property="og:url" content="https://quanluli.github.io/2019/03/28/TCP协议中的滑窗协议/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="后端学习，算法学习">
+<meta property="og:description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/go-back-n.jpg">
+<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/tcpswslide_send.png">
+<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/tcpswslide_accept.png">
+<meta property="og:updated_time" content="2019-03-28T14:54:25.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Luke的博客">
-<meta name="twitter:description" content="后端学习，算法学习">
+<meta name="twitter:title" content="TCP协议中的滑窗协议（连续ARQ协议）">
+<meta name="twitter:description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
+<meta name="twitter:image" content="https://quanluli.github.io/img/滑窗协议/go-back-n.jpg">
 
 
 
@@ -118,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://quanluli.github.io/archives/2018/02/"/>
+  <link rel="canonical" href="https://quanluli.github.io/2019/03/28/TCP协议中的滑窗协议/"/>
 
 
 
 
 
-  <title>Archive | Luke的博客</title>
+  <title>TCP协议中的滑窗协议（连续ARQ协议） | Luke的博客</title>
   
 
 
@@ -143,7 +149,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 <a href="https://github.com/QuanluLi" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -272,74 +278,200 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 4 posts in total. Keep on posting.
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://quanluli.github.io/2019/03/28/TCP协议中的滑窗协议/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QuanluLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/gentleman.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Luke的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/02/04/The-First-Blog/" itemprop="url">
-              
-                <span itemprop="name">The First Blog</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">TCP协议中的滑窗协议（连续ARQ协议）</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-02-04T20:28:23+08:00"
-              content="2018-02-04" >
-          02-04
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-28T09:34:37+08:00">
+                2019-03-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-服务器设计/" itemprop="url" rel="index">
+                    <span itemprop="name">C++服务器设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h1 id="TCP协议中的滑窗协议（连续ARQ协议）"><a href="#TCP协议中的滑窗协议（连续ARQ协议）" class="headerlink" title="TCP协议中的滑窗协议（连续ARQ协议）"></a>TCP协议中的滑窗协议（连续ARQ协议）</h1><h2 id="为什么需要滑动窗口协议（连续ARQ协议）"><a href="#为什么需要滑动窗口协议（连续ARQ协议）" class="headerlink" title="为什么需要滑动窗口协议（连续ARQ协议）"></a>为什么需要滑动窗口协议（连续ARQ协议）</h2><p>TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具体公式：</p>
+<script type="math/tex; mode=display">U=\frac{T_{D}}{T_{D}+RTT+T_{A}}</script><p>即发送分组时间与发送分组、平均往返时间和接受确认分组时间之和的比值。根据《计算机网络》的举例，假定1200km的传输距离，分组长度1200bit，传输速率1Mb/s， 则信道利用率约为5.66%，传输速率越高则利用率越低。因此，为了提高信道利用率，需要在发送分组和等待确认分组之间连续发送分组，而不是以空闲的状态等待。连续发送分组的数量受到发送方和接收方缓存空间和网络状态的影响，因此使用滑窗协议控制连续发送的字节数。</p>
+<h2 id="滑窗协议的工作方式"><a href="#滑窗协议的工作方式" class="headerlink" title="滑窗协议的工作方式"></a>滑窗协议的工作方式</h2><h3 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h3><p>滑动窗口的含义是：发送方维持一个可以连续发送的字节的序号，在序号范围内的字节可以连续发送，不需要等待确认分组；接收方维持一个已经接收到的字节的序号，对按顺序接收到的最高字节序号进行确认，并缓存未按序接收到的字节。因此，在滑窗协议的作用下，接收方不是对每个分组发送确认分组，而是采用累积确认的方式，对按序接受到的最后一个分组确认，表示此分组之前的所有分组都按序接收到了。这样做的好处是实现简单，缺点是不能反应已经接收到的分组的真实情况。如果发送方发送的分组中的第N个丢失，即使N之后分组被成功接收，也只能收到接收方对N-1和分组的确认，所以发送方需要重新发送从N开始的所有分组，即Go-back-N机制（回退N）。</p>
+<p><img src="/img/滑窗协议/go-back-n.jpg" alt="Go-back-N" title="Go-back-N"></p>
+<h3 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h3><p>对于发送方来说：发送窗口内的字节可以连续发送，不需要等待B的确认分组。同时已发送但未确认的数据都要保留，以备重新发送。发送窗口图示：</p>
+<p><img src="/img/滑窗协议/tcpswslide_send.png" alt="tcpswslide_send" title="send window"></p>
+<p>可以看见，在发送方窗口中，数据按照发送状态被分为四部分：</p>
+<ul>
+<li>已发送且已收到确认</li>
+<li>已发送但未收到确认</li>
+<li>在发送窗口内但尚未发送</li>
+<li>尚未进入发送窗口</li>
+</ul>
+<p>对于接收方来说：对于接收窗口内的按序收到的最后一个字节发送确认分组给发送方，并且将按序收到的数据交付主机的进程，因此接收窗口中的数据主要包含非按序接收的字节和尚未交付主机进程的数据。接收窗口图示：</p>
+<p><img src="/img/滑窗协议/tcpswslide_accept.png" alt="tcpwslide_accept" title="accept window"></p>
+<p>可以看见，在接收方窗口中，数据也可以按照接收状态分为四部分：</p>
+<ul>
+<li>已收到并发送过确认分组且已交付主机进程</li>
+<li>已收到但未交付主机或非按序字节</li>
+<li>接收窗口中允许继续接收的部分</li>
+<li>尚未进入接收窗口</li>
+</ul>
+<p>根据图示可以看出发送窗口和接收窗口的变化过程，为了方便描述，设发送方为S(send),接收方为A(accept)。假设S发送窗口内的10个字节后，收到A对前5个字节的确认，此时发送窗口向前移动5个字节，相当于扩大了发送窗口中的可发送部分。此时如果第6个字节丢失或在网络中延迟，导致A没有收到它，而是先收到了第7个字节，则A无法对接下来收到的字节发送确认，因为A只能对按序收到的字节确认。S发送窗口中的数据继续发送，可发送区域不断缩小，直到发送窗口中都是已发送但未确认的字节，即发送窗口已满，且没有继续收到A的确认（缺失第6字节），则S必须停止发送。在超时重传机制的作用下，S经过一段时间后会重新发送从第6字节开始的数据，直到收到A的确认，然后继续滑动发送窗口，持续这个动态过程。在接收窗口中，如果检查出收到的分组有错误，则丢弃改分组。对于窗口的工作过程，还有一些要点：</p>
+<ul>
+<li>发送窗口的大小是由接收方说明的，接收方会在TCP数据包的window字段，根据接收窗口的大小指明发送方可以设置的窗口大小。但是发送方的窗口大小不是每时每刻都保持与接收窗口一致。因为网络有延迟，接收方对窗口的调整信息可能不能及时传递到发送方，此外，发送窗口的大小还会根据网络的拥塞情况根据相应算法做调整。</li>
+<li>TCP协议没有对已接收的无序字节的处理作出规定，通常是缓存在接收窗口中，等到缺失的字节到来后组成有序数据，再交付主机进程处理</li>
+<li>TCP规定接收方必须有累积确认机制。接收端可以选择延迟确认，比如在需要发送数据时捎带上确认分组，但是推迟时间不能超过0.5秒。通常这种推迟确认的情况不会发生</li>
+</ul>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network-Programming/" rel="tag"><i class="fa fa-tag"></i> Network Programming</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/05/Reactor模式/" rel="next" title="Reactor模式">
+                <i class="fa fa-chevron-left"></i> Reactor模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/28/TCP协议的流量控控制/" rel="prev" title="TCP协议的流量控控制">
+                TCP协议的流量控控制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -347,6 +479,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -367,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -387,7 +532,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -409,7 +554,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -449,6 +594,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议中的滑窗协议（连续ARQ协议）"><span class="nav-number">1.</span> <span class="nav-text">TCP协议中的滑窗协议（连续ARQ协议）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要滑动窗口协议（连续ARQ协议）"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要滑动窗口协议（连续ARQ协议）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑窗协议的工作方式"><span class="nav-number">1.2.</span> <span class="nav-text">滑窗协议的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本过程"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体过程"><span class="nav-number">1.2.2.</span> <span class="nav-text">具体过程</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -462,7 +623,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -582,6 +743,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -956,6 +1121,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

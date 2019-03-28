@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll">
+<meta name="description" content="Reactor模式实现I/O复用  Reactor模式简介 在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。e">
 <meta name="keywords" content="C++服务器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Reactor模式">
 <meta property="og:url" content="https://quanluli.github.io/2019/01/05/Reactor模式/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll">
+<meta property="og:description" content="Reactor模式实现I/O复用  Reactor模式简介 在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。e">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://quanluli.github.io/img/Reactor/Reactor_component.png">
 <meta property="og:image" content="https://quanluli.github.io/img/Reactor/Reactor_use.png">
 <meta property="og:updated_time" content="2019-01-08T03:24:39.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reactor模式">
-<meta name="twitter:description" content="Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll">
+<meta name="twitter:description" content="Reactor模式实现I/O复用  Reactor模式简介 在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。e">
 <meta name="twitter:image" content="https://quanluli.github.io/img/Reactor/Reactor_component.png">
 
 
@@ -380,15 +380,19 @@
       
 
       
-        <h1 id="Reactor模式实现I-O复用"><a href="#Reactor模式实现I-O复用" class="headerlink" title="Reactor模式实现I/O复用"></a>Reactor模式实现I/O复用</h1><h2 id="Reactor模式简介"><a href="#Reactor模式简介" class="headerlink" title="Reactor模式简介"></a>Reactor模式简介</h2><p>在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll作为加强版的poll不会随着监听的套接字数量增长而大幅降低效率。epoll也是通常会使用的I/O复用模型，但是epoll作为linux系统调用过于底层，在实际使用中常常对其按照某种事件处理机制进一步封装。一种常用的事件处理机制工作方式如下描述：</p>
-<p>服务器连接的套接字可以抽象为事件源，每个事件对应的处理函数可以抽象为事件处理器，在事件源和事件处理器之间需要一个事件分离器进行分配，将每个事件分配到对应的事件处理器中进行处理。事件分离器用epoll实现。应用程序事先在事件分离器中注册相应的事件处理器，当事件发生时，epoll将该事件分配到已注册的事件处理器中进行处理，由事件处理器完成实际的读写。这种事件处理机制就是Reactor模式。<br>Reactor的核心在于以事件为驱动，而不是主动调用处理函数等待事件发生。在Reactor模式中，应用程序需要先注册好处理事件的接口，当事件发生时回调已经注册好的处理函数进行处理。这种被动调用的方式有如下优点：</p>
+        <h1 id="reactor模式实现io复用"><a class="markdownIt-Anchor" href="#reactor模式实现io复用"></a> Reactor模式实现I/O复用</h1>
+<h2 id="reactor模式简介"><a class="markdownIt-Anchor" href="#reactor模式简介"></a> Reactor模式简介</h2>
+<p>在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内核中某个套接字是否就绪，如果连接了大量套接字则每次轮询时间会很长，不利于I/O密集型应用。epoll作为加强版的poll不会随着监听的套接字数量增长而大幅降低效率。epoll也是通常会使用的I/O复用模型，但是epoll作为linux系统调用过于底层，在实际使用中常常对其按照某种事件处理机制进一步封装。一种常用的事件处理机制工作方式如下描述：</p>
+<p>服务器连接的套接字可以抽象为事件源，每个事件对应的处理函数可以抽象为事件处理器，在事件源和事件处理器之间需要一个事件分离器进行分配，将每个事件分配到对应的事件处理器中进行处理。事件分离器用epoll实现。应用程序事先在事件分离器中注册相应的事件处理器，当事件发生时，epoll将该事件分配到已注册的事件处理器中进行处理，由事件处理器完成实际的读写。这种事件处理机制就是Reactor模式。<br>
+Reactor的核心在于以事件为驱动，而不是主动调用处理函数等待事件发生。在Reactor模式中，应用程序需要先注册好处理事件的接口，当事件发生时回调已经注册好的处理函数进行处理。这种被动调用的方式有如下优点：</p>
 <ul>
 <li>响应速度快；</li>
 <li>可扩展性强，能够方便的增加Reactor实例个数来充分利用CPU资源；</li>
 <li>可复用性强，Reactor与具体的业务逻辑无关，只与I/O调度有关，具有很高的复用性；</li>
 <li>编程简单，避免了多线程/多进程的切换开销。</li>
 </ul>
-<h2 id="Reactor模式组成"><a href="#Reactor模式组成" class="headerlink" title="Reactor模式组成"></a>Reactor模式组成</h2><p><img src="/img/Reactor/Reactor_component.png" alt="Reactor的组成" title="Reactor的组成"></p>
+<h2 id="reactor模式组成"><a class="markdownIt-Anchor" href="#reactor模式组成"></a> Reactor模式组成</h2>
+<p><img src="/img/Reactor/Reactor_component.png" alt="Reactor的组成" title="Reactor的组成"></p>
 <p>如图中所示，Reactor为时间反应器， Event Handler为时间处理器，Event Demultiplexer为时间分离器， Concrete Event Handler封装时间处理器， Handle为时间源。</p>
 <ul>
 <li>事件源（handler）：一般是描述符，由操作系统提供。可以使socket，文件描述符等。可以来自系统内部，也可以来自系统内部；</li>
@@ -396,9 +400,17 @@
 <li>事件分离器（Event Demultiplexer）：一般由epoll实现，调用者会被阻塞直到事件分离器上注册的事件发生；</li>
 <li>事件处理器（Event Handler）：提供了一组能够处理对应事件的接口，这组接口事先由应用程序注册。</li>
 </ul>
-<h2 id="Reactor事件处理流程"><a href="#Reactor事件处理流程" class="headerlink" title="Reactor事件处理流程"></a>Reactor事件处理流程</h2><p>首先是事件注册部分，应用程序将期待注册的套接字描述符作为事件源，将对应的回调函数和该描述符注册到事件处理器上，然后将该事件处理器注册到事件反应器上。事件反应器将注册信息再次注册到事件分离器epoll中，在epoll中通过epoll_ctl进行添加描述符及事件，并层层返回注册结果；<br>然后是事件处理部分，事件反应器通过epoll_wait等待注册事件发生。一旦事件真的发生，epoll_wait将会返回，并将包含该事件的事件集返回到事件反应器，反应器根据事件源找到该事件的处理器，并根据事件类型调用之前在事件处理器中注册的回调函数，在回调函数中完成事件的处理。<br>根据Reactor模式的具体流程可知，应用程序只参与了最初的注册步骤，具体的等待事件发生和事件处理都由Reactor分配。因此， 在Reactor模式中，应用程序无须关心事件的来源和发生时间，只要完成回调函数和描述符的注册即可，事件的处理流程被Reactor控制翻转了。这一特性对应了设计模式中的好莱坞原则。</p>
-<h2 id="Reactor的使用"><a href="#Reactor的使用" class="headerlink" title="Reactor的使用"></a>Reactor的使用</h2><p><img src="/img/Reactor/Reactor_use.png" alt="Reactor的事件循环" title="Reactor的使用"></p>
-<p>在初始化阶段， 我们将服务器监听套接字及对应的处理函数注册到Reactor中，然后系统进入Reactor的大循环中等待事件的发生。<br>接下来，如果发生监听套接字可读事件，则表示有新连接产生。Reactor回调之前注册好的回调函数，即通过accept系统调用获取新连接的套接字，并将该连接的描述符和对应的处理函数注册到Reactor中。执行完监听套接字的处理函数后，若仍有事件未处理，则继续进入该事件对应的回调函数中进行处理；否则进入下一次事件循环中，继续调用epoll阻塞等待事件的发生；<br>这时，Reactor上已经注册了两类事件：监听套接字可读事件（代表新连接的产生）和连接套接字可读事件（代表有从客户端发来的数据）。<br>在接下来的循环中，如果到达的事件是监听套接字事件，则重复上面的步骤；若到达的是连接套接字事件，则Reactor会回调对应的连接套接字Handler。在这次调用中，先通过read系统调用读取收到的数据，然后进行具体的处理。处理结束后若还有事件待处理，则继续处理，否则进入下次循环，epoll阻塞等待事件的发生。<br>以上描述的是单线程中服务器使用Reactor模式建立新的客户端连接并接受、处理客户端数据的工作。Reactor满足了高并发和高性能的需求，同时实现了网络细节与业务逻辑的分离。在使用中只需要在不同事件对应的Handler中实现具体的业务逻辑即可。</p>
+<h2 id="reactor事件处理流程"><a class="markdownIt-Anchor" href="#reactor事件处理流程"></a> Reactor事件处理流程</h2>
+<p>首先是事件注册部分，应用程序将期待注册的套接字描述符作为事件源，将对应的回调函数和该描述符注册到事件处理器上，然后将该事件处理器注册到事件反应器上。事件反应器将注册信息再次注册到事件分离器epoll中，在epoll中通过epoll_ctl进行添加描述符及事件，并层层返回注册结果；<br>
+然后是事件处理部分，事件反应器通过epoll_wait等待注册事件发生。一旦事件真的发生，epoll_wait将会返回，并将包含该事件的事件集返回到事件反应器，反应器根据事件源找到该事件的处理器，并根据事件类型调用之前在事件处理器中注册的回调函数，在回调函数中完成事件的处理。<br>
+根据Reactor模式的具体流程可知，应用程序只参与了最初的注册步骤，具体的等待事件发生和事件处理都由Reactor分配。因此， 在Reactor模式中，应用程序无须关心事件的来源和发生时间，只要完成回调函数和描述符的注册即可，事件的处理流程被Reactor控制翻转了。这一特性对应了设计模式中的好莱坞原则。</p>
+<h2 id="reactor的使用"><a class="markdownIt-Anchor" href="#reactor的使用"></a> Reactor的使用</h2>
+<p><img src="/img/Reactor/Reactor_use.png" alt="Reactor的事件循环" title="Reactor的使用"></p>
+<p>在初始化阶段， 我们将服务器监听套接字及对应的处理函数注册到Reactor中，然后系统进入Reactor的大循环中等待事件的发生。<br>
+接下来，如果发生监听套接字可读事件，则表示有新连接产生。Reactor回调之前注册好的回调函数，即通过accept系统调用获取新连接的套接字，并将该连接的描述符和对应的处理函数注册到Reactor中。执行完监听套接字的处理函数后，若仍有事件未处理，则继续进入该事件对应的回调函数中进行处理；否则进入下一次事件循环中，继续调用epoll阻塞等待事件的发生；<br>
+这时，Reactor上已经注册了两类事件：监听套接字可读事件（代表新连接的产生）和连接套接字可读事件（代表有从客户端发来的数据）。<br>
+在接下来的循环中，如果到达的事件是监听套接字事件，则重复上面的步骤；若到达的是连接套接字事件，则Reactor会回调对应的连接套接字Handler。在这次调用中，先通过read系统调用读取收到的数据，然后进行具体的处理。处理结束后若还有事件待处理，则继续处理，否则进入下次循环，epoll阻塞等待事件的发生。<br>
+以上描述的是单线程中服务器使用Reactor模式建立新的客户端连接并接受、处理客户端数据的工作。Reactor满足了高并发和高性能的需求，同时实现了网络细节与业务逻辑的分离。在使用中只需要在不同事件对应的Handler中实现具体的业务逻辑即可。</p>
 
       
     </div>
@@ -438,6 +450,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/28/TCP协议中的滑窗协议/" rel="prev" title="TCP协议中的滑窗协议（连续ARQ协议）">
+                TCP协议中的滑窗协议（连续ARQ协议） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -518,7 +534,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -540,7 +556,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -589,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reactor模式实现I-O复用"><span class="nav-number">1.</span> <span class="nav-text">Reactor模式实现I/O复用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor模式简介"><span class="nav-number">1.1.</span> <span class="nav-text">Reactor模式简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor模式组成"><span class="nav-number">1.2.</span> <span class="nav-text">Reactor模式组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor事件处理流程"><span class="nav-number">1.3.</span> <span class="nav-text">Reactor事件处理流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor的使用"><span class="nav-number">1.4.</span> <span class="nav-text">Reactor的使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#reactor模式实现io复用"><span class="nav-number">1.</span> <span class="nav-text"> Reactor模式实现I/O复用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reactor模式简介"><span class="nav-number">1.1.</span> <span class="nav-text"> Reactor模式简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reactor模式组成"><span class="nav-number">1.2.</span> <span class="nav-text"> Reactor模式组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reactor事件处理流程"><span class="nav-number">1.3.</span> <span class="nav-text"> Reactor事件处理流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reactor的使用"><span class="nav-number">1.4.</span> <span class="nav-text"> Reactor的使用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1107,6 +1123,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
