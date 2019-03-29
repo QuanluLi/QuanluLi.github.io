@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="C++中的int, long, long longC++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。  int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long  三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
+<meta name="description" content="C++中的int, long, long long C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。 int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long 三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
 <meta name="keywords" content="C++,数据类型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++中的int, long, long long">
 <meta property="og:url" content="https://quanluli.github.io/2018/10/24/C-中的int-long-long-long/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="C++中的int, long, long longC++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。  int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long  三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
+<meta property="og:description" content="C++中的int, long, long long C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。 int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long 三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2018-10-24T03:19:26.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的int, long, long long">
-<meta name="twitter:description" content="C++中的int, long, long longC++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。  int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long  三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
+<meta name="twitter:description" content="C++中的int, long, long long C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。 int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&amp;gt;long 三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了">
 
 
 
@@ -377,10 +377,10 @@
       
 
       
-        <h1 id="C-中的int-long-long-long"><a href="#C-中的int-long-long-long" class="headerlink" title="C++中的int, long, long long"></a>C++中的int, long, long long</h1><p>C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。</p>
-<p> int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&gt;long</p>
-<p> 三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了最小尺寸，允许编译器赋予更大的尺寸。</p>
-<div class="table-container">
+        <h1 id="c中的int-long-long-long"><a class="markdownIt-Anchor" href="#c中的int-long-long-long"></a> C++中的int, long, long long</h1>
+<p>C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。</p>
+<p>int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&gt;long</p>
+<p>三者占用的空间，根据《C++ primer》算数类型的尺寸根据不同的机器和编译器会有所差别。C++只规定了最小尺寸，允许编译器赋予更大的尺寸。</p>
 <table>
 <thead>
 <tr>
@@ -407,8 +407,7 @@
 </tr>
 </tbody>
 </table>
-</div>
-<p>C++语言规定int至少和short一样大，long至少和int一样大， long long 至少和long一样大。其中long long是C++11中新定义的。通常来讲，short是半个机器字长，int是一个机器字长， long是一到两个机器字长， long long在任何环境下都是8个字节。</p>
+<p>C<ins>语言规定int至少和short一样大，long至少和int一样大， long long 至少和long一样大。其中long long是C</ins>11中新定义的。通常来讲，short是半个机器字长，int是一个机器字长， long是一到两个机器字长， long long在任何环境下都是8个字节。</p>
 <p>一般情况下，32位系统中short为2个字节，int为4个字节，long与int相同为4个字节， long long为8个字节；64位系统中short依然为2个字节，为了向前兼容，int也会被编译为4个字节，long为8个字节，long long为8个字节。</p>
 <p>所以在实际使用中，不同的编译器对算数类型的处理可能会有差别，在不同系统和编译器中得到的算数类型尺寸不一定相同，除了short是稳定的2个字节，以及long long是稳定的8个字节。所以在需要获取算数类型尺寸的时候最好用sizeof()， 而不是凭经验认定int就是4个字节或long就是8个字节, 实际上long与int尺寸相同的情况很常见。需要扩大尺寸的话尽量用long long，可以保证是8个字节。</p>
 
@@ -536,7 +535,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -607,7 +606,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-中的int-long-long-long"><span class="nav-number">1.</span> <span class="nav-text">C++中的int, long, long long</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c中的int-long-long-long"><span class="nav-number">1.</span> <span class="nav-text"> C++中的int, long, long long</span></a></li></ol></div>
             
 
           </div>

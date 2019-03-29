@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
+<meta name="description" content="TCP协议中的滑窗协议（连续ARQ协议）  为什么需要滑动窗口协议（连续ARQ协议） TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非">
 <meta name="keywords" content="Network Programming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP协议中的滑窗协议（连续ARQ协议）">
 <meta property="og:url" content="https://quanluli.github.io/2019/03/28/TCP协议中的滑窗协议/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
+<meta property="og:description" content="TCP协议中的滑窗协议（连续ARQ协议）  为什么需要滑动窗口协议（连续ARQ协议） TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/go-back-n.jpg">
-<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/tcpswslide_send.png">
-<meta property="og:image" content="https://quanluli.github.io/img/滑窗协议/tcpswslide_accept.png">
+<meta property="og:image" content="https://quanluli.github.io/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/go-back-n.jpg">
+<meta property="og:image" content="https://quanluli.github.io/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/tcpswslide_send.png">
+<meta property="og:image" content="https://quanluli.github.io/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/tcpswslide_accept.png">
 <meta property="og:updated_time" content="2019-03-28T14:54:25.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP协议中的滑窗协议（连续ARQ协议）">
-<meta name="twitter:description" content="TCP协议中的滑窗协议（连续ARQ协议）为什么需要滑动窗口协议（连续ARQ协议）TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具">
-<meta name="twitter:image" content="https://quanluli.github.io/img/滑窗协议/go-back-n.jpg">
+<meta name="twitter:description" content="TCP协议中的滑窗协议（连续ARQ协议）  为什么需要滑动窗口协议（连续ARQ协议） TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非">
+<meta name="twitter:image" content="https://quanluli.github.io/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/go-back-n.jpg">
 
 
 
@@ -381,12 +381,19 @@
       
 
       
-        <h1 id="TCP协议中的滑窗协议（连续ARQ协议）"><a href="#TCP协议中的滑窗协议（连续ARQ协议）" class="headerlink" title="TCP协议中的滑窗协议（连续ARQ协议）"></a>TCP协议中的滑窗协议（连续ARQ协议）</h1><h2 id="为什么需要滑动窗口协议（连续ARQ协议）"><a href="#为什么需要滑动窗口协议（连续ARQ协议）" class="headerlink" title="为什么需要滑动窗口协议（连续ARQ协议）"></a>为什么需要滑动窗口协议（连续ARQ协议）</h2><p>TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具体公式：</p>
-<script type="math/tex; mode=display">U=\frac{T_{D}}{T_{D}+RTT+T_{A}}</script><p>即发送分组时间与发送分组、平均往返时间和接受确认分组时间之和的比值。根据《计算机网络》的举例，假定1200km的传输距离，分组长度1200bit，传输速率1Mb/s， 则信道利用率约为5.66%，传输速率越高则利用率越低。因此，为了提高信道利用率，需要在发送分组和等待确认分组之间连续发送分组，而不是以空闲的状态等待。连续发送分组的数量受到发送方和接收方缓存空间和网络状态的影响，因此使用滑窗协议控制连续发送的字节数。</p>
-<h2 id="滑窗协议的工作方式"><a href="#滑窗协议的工作方式" class="headerlink" title="滑窗协议的工作方式"></a>滑窗协议的工作方式</h2><h3 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h3><p>滑动窗口的含义是：发送方维持一个可以连续发送的字节的序号，在序号范围内的字节可以连续发送，不需要等待确认分组；接收方维持一个已经接收到的字节的序号，对按顺序接收到的最高字节序号进行确认，并缓存未按序接收到的字节。因此，在滑窗协议的作用下，接收方不是对每个分组发送确认分组，而是采用累积确认的方式，对按序接受到的最后一个分组确认，表示此分组之前的所有分组都按序接收到了。这样做的好处是实现简单，缺点是不能反应已经接收到的分组的真实情况。如果发送方发送的分组中的第N个丢失，即使N之后分组被成功接收，也只能收到接收方对N-1和分组的确认，所以发送方需要重新发送从N开始的所有分组，即Go-back-N机制（回退N）。</p>
-<p><img src="/img/滑窗协议/go-back-n.jpg" alt="Go-back-N" title="Go-back-N"></p>
-<h3 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h3><p>对于发送方来说：发送窗口内的字节可以连续发送，不需要等待B的确认分组。同时已发送但未确认的数据都要保留，以备重新发送。发送窗口图示：</p>
-<p><img src="/img/滑窗协议/tcpswslide_send.png" alt="tcpswslide_send" title="send window"></p>
+        <h1 id="tcp协议中的滑窗协议连续arq协议"><a class="markdownIt-Anchor" href="#tcp协议中的滑窗协议连续arq协议"></a> TCP协议中的滑窗协议（连续ARQ协议）</h1>
+<h2 id="为什么需要滑动窗口协议连续arq协议"><a class="markdownIt-Anchor" href="#为什么需要滑动窗口协议连续arq协议"></a> 为什么需要滑动窗口协议（连续ARQ协议）</h2>
+<p>TCP协议的滑窗协议的作用是提高信道利用率，同时在流量控制和拥塞管理中也会起到控制作用。根据TCP协议的停止等待协议，发送方在发送一个分组后需要等待接收方返回确认分组，在收到确认分组之后发送方才认为信息发送成功，否则根据超时重传机制重复发送。在这个过程中，如果发送方每发送一个分组就进入等待状态，则信道利用率会非常低，具体公式：</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>U</mi><mo>=</mo><mfrac><msub><mi>T</mi><mi>D</mi></msub><mrow><msub><mi>T</mi><mi>D</mi></msub><mo>+</mo><mi>R</mi><mi>T</mi><mi>T</mi><mo>+</mo><msub><mi>T</mi><mi>A</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">U=\frac{T_{D}}{T_{D}+RTT+T_{A}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.19633em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">A</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>即发送分组时间与发送分组、平均往返时间和接受确认分组时间之和的比值。根据《计算机网络》的举例，假定1200km的传输距离，分组长度1200bit，传输速率1Mb/s， 则信道利用率约为5.66%，传输速率越高则利用率越低。因此，为了提高信道利用率，需要在发送分组和等待确认分组之间连续发送分组，而不是以空闲的状态等待。连续发送分组的数量受到发送方和接收方缓存空间和网络状态的影响，因此使用滑窗协议控制连续发送的字节数。</p>
+<h2 id="滑窗协议的工作方式"><a class="markdownIt-Anchor" href="#滑窗协议的工作方式"></a> 滑窗协议的工作方式</h2>
+<h3 id="基本过程"><a class="markdownIt-Anchor" href="#基本过程"></a> 基本过程</h3>
+<p>滑动窗口的含义是：发送方维持一个可以连续发送的字节的序号，在序号范围内的字节可以连续发送，不需要等待确认分组；接收方维持一个已经接收到的字节的序号，对按顺序接收到的最高字节序号进行确认，并缓存未按序接收到的字节。因此，在滑窗协议的作用下，接收方不是对每个分组发送确认分组，而是采用累积确认的方式，对按序接受到的最后一个分组确认，表示此分组之前的所有分组都按序接收到了。这样做的好处是实现简单，缺点是不能反应已经接收到的分组的真实情况。如果发送方发送的分组中的第N个丢失，即使N之后分组被成功接收，也只能收到接收方对N-1和分组的确认，所以发送方需要重新发送从N开始的所有分组，即Go-back-N机制（回退N）。</p>
+<p><img src="/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/go-back-n.jpg" alt="Go-back-N" title="Go-back-N"></p>
+<h3 id="具体过程"><a class="markdownIt-Anchor" href="#具体过程"></a> 具体过程</h3>
+<p>对于发送方来说：发送窗口内的字节可以连续发送，不需要等待B的确认分组。同时已发送但未确认的数据都要保留，以备重新发送。发送窗口图示：</p>
+<p><img src="/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/tcpswslide_send.png" alt="tcpswslide_send" title="send window"></p>
 <p>可以看见，在发送方窗口中，数据按照发送状态被分为四部分：</p>
 <ul>
 <li>已发送且已收到确认</li>
@@ -395,7 +402,7 @@
 <li>尚未进入发送窗口</li>
 </ul>
 <p>对于接收方来说：对于接收窗口内的按序收到的最后一个字节发送确认分组给发送方，并且将按序收到的数据交付主机的进程，因此接收窗口中的数据主要包含非按序接收的字节和尚未交付主机进程的数据。接收窗口图示：</p>
-<p><img src="/img/滑窗协议/tcpswslide_accept.png" alt="tcpwslide_accept" title="accept window"></p>
+<p><img src="/img/%E6%BB%91%E7%AA%97%E5%8D%8F%E8%AE%AE/tcpswslide_accept.png" alt="tcpwslide_accept" title="accept window"></p>
 <p>可以看见，在接收方窗口中，数据也可以按照接收状态分为四部分：</p>
 <ul>
 <li>已收到并发送过确认分组且已交付主机进程</li>
@@ -532,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -603,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议中的滑窗协议（连续ARQ协议）"><span class="nav-number">1.</span> <span class="nav-text">TCP协议中的滑窗协议（连续ARQ协议）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要滑动窗口协议（连续ARQ协议）"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要滑动窗口协议（连续ARQ协议）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑窗协议的工作方式"><span class="nav-number">1.2.</span> <span class="nav-text">滑窗协议的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本过程"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体过程"><span class="nav-number">1.2.2.</span> <span class="nav-text">具体过程</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp协议中的滑窗协议连续arq协议"><span class="nav-number">1.</span> <span class="nav-text"> TCP协议中的滑窗协议（连续ARQ协议）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要滑动窗口协议连续arq协议"><span class="nav-number">1.1.</span> <span class="nav-text"> 为什么需要滑动窗口协议（连续ARQ协议）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑窗协议的工作方式"><span class="nav-number">1.2.</span> <span class="nav-text"> 滑窗协议的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本过程"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 基本过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体过程"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 具体过程</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
