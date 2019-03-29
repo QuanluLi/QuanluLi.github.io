@@ -287,6 +287,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://quanluli.github.io/2019/03/29/TCP协议中的拥塞控制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QuanluLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/gentleman.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Luke的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/29/TCP协议中的拥塞控制/" itemprop="url">TCP协议中的拥塞控制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-29T11:20:14+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-服务器/" itemprop="url" rel="index">
+                    <span itemprop="name">C++服务器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          TCP协议中的拥塞控制为什么要进行拥塞控制在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/29/TCP协议中的拥塞控制/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://quanluli.github.io/2019/03/28/TCP协议的流量控控制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -380,13 +528,10 @@
       
         
           
-           TCP协议的流量控控制
- 为什么需要流量控制
-在TCP传输过程中，发送和接收速度受到缓存和网络情况的限制，如果发送过快，会造成数据丢失，降低信道利用率。流量控制就是将发送速率控制在合理范围内。
- 流量控制的实现
-流量控制的实现主要通过改变窗口的大小。如图所示：
+          TCP协议的流量控控制为什么需要流量控制在TCP传输过程中，发送和接收速度受到缓存和网络情况的限制，如果发送过快，会造成数据丢失，降低信道利用率。流量控制就是将发送速率控制在合理范围内。
+流量控制的实现流量控制的实现主要通过改变窗口的大小。如图所示：
 
-此例中，接收端每次应答的时候都会更
+此例中，接收端每次应答的时候都会更新接收窗口值
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -682,9 +827,7 @@
       
         
           
-           Reactor模式实现I/O复用
- Reactor模式简介
-在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持
+          Reactor模式实现I/O复用Reactor模式简介在网络服务器编程中，一个常见的实际场景是服务器需要与多个套接字连接，如果某个套接字可读，即读取该套接字数据并做相关处理。处理这样场景的最简单思路就是用非阻塞的read对所有套接字轮询，或者使用select和poll进行轮询。因为轮询需要持续查看内
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -811,17 +954,15 @@
         
           
           
-								            
-						
+                                            
+                        
                 C++ 虚函数表解析
 &nbsp;
 陈皓
 http://blog.csdn.net/haoel
 &nbsp;
 &nbsp;
-前言
-&nbsp;
-C++中的虚函数的作用主要是实现了多态的机制。关于多态，简而言之就
+前
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -969,10 +1110,9 @@ C++中的虚函数的作用主要是实现了多态的机制。关于多态，�
       
         
           
-           C++中的int, long, long long
-C++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。
-int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&gt;long
-三者占
+          C++中的int, long, long longC++中的三种整数数据类型，int， long， long long是平时极为常用的类型，在此总结一下它们的用法。
+ int， long，和long long之间可以隐式转换，规则为从取值范围小到取值范围大的转换，例如int&gt;long
+ 三者占
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1120,11 +1260,8 @@ int， long，和long long之间可以隐式转换，规则为从取值范围小
       
         
           
-           Leetcode-Dynamic Programming: Best Time to Buy and Sell Stock系列
-
-
- Best Time to Buy and Sell Stock
-Say you have an array for which the ith element is
+          Leetcode-Dynamic Programming: Best Time to Buy and Sell Stock系列
+Best Time to Buy and Sell StockSay you have an array for which the ith element is the 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1216,7 +1353,7 @@ Say you have an array for which the ith element is
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1227,7 +1364,7 @@ Say you have an array for which the ith element is
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1238,7 +1375,7 @@ Say you have an array for which the ith element is
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
