@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="TCP协议中的拥塞控制  为什么要进行拥塞控制 在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞">
+<meta name="description" content="TCP协议中的拥塞控制为什么要进行拥塞控制在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞更加严重">
 <meta name="keywords" content="Newwork progamming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP协议中的拥塞控制">
 <meta property="og:url" content="https://quanluli.github.io/2019/03/29/TCP协议中的拥塞控制/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="TCP协议中的拥塞控制  为什么要进行拥塞控制 在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞">
+<meta property="og:description" content="TCP协议中的拥塞控制为什么要进行拥塞控制在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞更加严重">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://quanluli.github.io/img/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/cwnd.jpg">
-<meta property="og:image" content="https://quanluli.github.io/img/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/%E5%BF%AB%E6%81%A2%E5%A4%8D.jpg">
+<meta property="og:image" content="https://quanluli.github.io/img/拥塞控制/cwnd.jpg">
+<meta property="og:image" content="https://quanluli.github.io/img/拥塞控制/快恢复.jpg">
 <meta property="og:updated_time" content="2019-03-29T09:24:11.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP协议中的拥塞控制">
-<meta name="twitter:description" content="TCP协议中的拥塞控制  为什么要进行拥塞控制 在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞">
-<meta name="twitter:image" content="https://quanluli.github.io/img/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/cwnd.jpg">
+<meta name="twitter:description" content="TCP协议中的拥塞控制为什么要进行拥塞控制在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞更加严重">
+<meta name="twitter:image" content="https://quanluli.github.io/img/拥塞控制/cwnd.jpg">
 
 
 
@@ -380,19 +380,15 @@
       
 
       
-        <h1 id="tcp协议中的拥塞控制"><a class="markdownIt-Anchor" href="#tcp协议中的拥塞控制"></a> TCP协议中的拥塞控制</h1>
-<h2 id="为什么要进行拥塞控制"><a class="markdownIt-Anchor" href="#为什么要进行拥塞控制"></a> 为什么要进行拥塞控制</h2>
-<p>在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞更加严重。因此解决拥塞问题通常采用的手段是改变网络的可用资源，或降低源头发送的数据量。拥塞控制的难处在于整个计算机网络是一个动态问题，需要监控拥塞发生的位置和数据源头，这本身就需要一定的开销（在节点之间交换信息和命令，用于选择合适的拥塞控制策略）。随着网络的复杂化和高速化，很容易出现节点缓存不足的情况，从而造成拥塞，并且有时候拥塞控制策略本身也会成为导致拥塞的原因。</p>
+        <h1 id="TCP协议中的拥塞控制"><a href="#TCP协议中的拥塞控制" class="headerlink" title="TCP协议中的拥塞控制"></a>TCP协议中的拥塞控制</h1><h2 id="为什么要进行拥塞控制"><a href="#为什么要进行拥塞控制" class="headerlink" title="为什么要进行拥塞控制"></a>为什么要进行拥塞控制</h2><p>在网络中，如果各个主机请求的资源超过了网络能够承载的负荷，则发生拥塞，网络的性能会变坏。发生拥塞的原因有很多，并不能通过简单地增加节点内存或提高处理速率来解决问题，而是一个平衡的问题。在网络中一定有某些节点的缓存和处理速率与其他节点不匹配，当某个节点的缓存较小时，会丢弃一些新到的分组，而相应的主机会重传这些分组，甚至会重传多次，这样导致网络中的拥塞更加严重。因此解决拥塞问题通常采用的手段是改变网络的可用资源，或降低源头发送的数据量。拥塞控制的难处在于整个计算机网络是一个动态问题，需要监控拥塞发生的位置和数据源头，这本身就需要一定的开销（在节点之间交换信息和命令，用于选择合适的拥塞控制策略）。随着网络的复杂化和高速化，很容易出现节点缓存不足的情况，从而造成拥塞，并且有时候拥塞控制策略本身也会成为导致拥塞的原因。</p>
 <p>目前解决拥塞问题的思想主要借鉴控制论的原理，分为开环控制和闭环控制。开环控制就是在设计网络时尽量全面的考虑可能出现的拥塞问题，在系统运行起来之后不再进行额外的干预；闭环控制则是在网络工作过程中，根据网络内部流量分布信息实时作出调整，通常有以下几种措施：</p>
 <ul>
 <li>监测网络以便定位拥塞发生的位置和时间</li>
 <li>将拥塞的信息发送到可以采取行动解决问题的地方（通常是信息的源头）</li>
 <li>调整网络的运行以解决拥塞问题</li>
 </ul>
-<h2 id="几种具体的拥塞控制算法"><a class="markdownIt-Anchor" href="#几种具体的拥塞控制算法"></a> 几种具体的拥塞控制算法</h2>
-<p>1999年因特网建议标准RFC2581定义了四种拥塞控制的算法：慢开始(slow start)，拥塞避免(congestion avoidance)，快重传(fast retransmit)，快恢复(fast recovery)。</p>
-<h3 id="慢开始"><a class="markdownIt-Anchor" href="#慢开始"></a> 慢开始</h3>
-<p>核心思想是从较小的发送窗口开始，比如初始发送窗口设为一个MSS，随后从小到大增长到拥塞窗口的值。例如，先设发送窗口为一个MSS，在收到确认后增加为2个MSS，此后每收到一个确认分组就增加一个MSS。由于发送窗口内的数据连续发送，所以发送完一个窗口内的数据后，发送窗口的值会翻一倍，亦即拥塞窗口cwnd翻一倍。每经过一个传输轮次（发送完发送窗口内的所有数据并受到确认，为一个传输轮次），cwnd就翻一倍。这样cwnd相当于随着传输轮次成指数增长，因此慢开始并不是指增长速度慢，而是开始时发送窗口较小导致发送速率慢，其实cwnd的增长速率反而很快。</p>
+<h2 id="几种具体的拥塞控制算法"><a href="#几种具体的拥塞控制算法" class="headerlink" title="几种具体的拥塞控制算法"></a>几种具体的拥塞控制算法</h2><p>1999年因特网建议标准RFC2581定义了四种拥塞控制的算法：慢开始(slow start)，拥塞避免(congestion avoidance)，快重传(fast retransmit)，快恢复(fast recovery)。</p>
+<h3 id="慢开始"><a href="#慢开始" class="headerlink" title="慢开始"></a>慢开始</h3><p>核心思想是从较小的发送窗口开始，比如初始发送窗口设为一个MSS，随后从小到大增长到拥塞窗口的值。例如，先设发送窗口为一个MSS，在收到确认后增加为2个MSS，此后每收到一个确认分组就增加一个MSS。由于发送窗口内的数据连续发送，所以发送完一个窗口内的数据后，发送窗口的值会翻一倍，亦即拥塞窗口cwnd翻一倍。每经过一个传输轮次（发送完发送窗口内的所有数据并受到确认，为一个传输轮次），cwnd就翻一倍。这样cwnd相当于随着传输轮次成指数增长，因此慢开始并不是指增长速度慢，而是开始时发送窗口较小导致发送速率慢，其实cwnd的增长速率反而很快。</p>
 <p>拥塞窗口cwnd不能无限增长，否则会引起拥塞。因此，需要设置阈值ssthresh，即慢开始门限，慢开始门限将cwnd划分出三个状态：</p>
 <ul>
 <li>cwnd &lt; ssthresh时，使用慢开始算法</li>
@@ -400,19 +396,16 @@
 <li>cwnd = ssthresh时，以上两种算法二选一</li>
 </ul>
 <p>其中拥塞避免算法是一种减缓cwnd增长的算法。</p>
-<h3 id="拥塞避免"><a class="markdownIt-Anchor" href="#拥塞避免"></a> 拥塞避免</h3>
-<p>核心思想是让cwnd不随传输轮次的增加成指数增长，而是成线性增长。每经过一个传输轮次就将cwnd增加一个MSS。通常拥塞避免算法和慢开始配合使用。</p>
-<p><img src="/img/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/cwnd.jpg" alt="cwnd" title="慢开始和拥塞避免"></p>
+<h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>核心思想是让cwnd不随传输轮次的增加成指数增长，而是成线性增长。每经过一个传输轮次就将cwnd增加一个MSS。通常拥塞避免算法和慢开始配合使用。</p>
+<p><img src="/img/拥塞控制/cwnd.jpg" alt="cwnd" title="慢开始和拥塞避免"></p>
 <p>如上图所示，不论在慢开始阶段还是拥塞避免阶段，只要网络中出现了拥塞现象，就将ssthresh减为原来的一半，然后将cwnd置为1，重新开始慢开始算法。这个过程也被称为“乘法减小”，即按1/2的比例缩小ssthresh。拥塞避免阶段也被称为“加法增大”，指cwnd的线性增长过程。</p>
-<h3 id="快重传"><a class="markdownIt-Anchor" href="#快重传"></a> 快重传</h3>
-<p>快重传的核心思想是要求接收端在收到失序的报文段后立刻发送对最新按序报文段的确认，不能推迟捎带确认。跟非快重传方式相比（可以对失序报文什么也不做），快重传能够及时让发送端意识到报文的丢失，不必等到计时器到时再重传相应报文。快重传算法规定，如果发送端连续收到三个重复的确认，就认为有报文丢失（被确认的下一个报文），然后重新发送。</p>
-<h3 id="快恢复"><a class="markdownIt-Anchor" href="#快恢复"></a> 快恢复</h3>
-<p>快恢复通常配合快重传一起使用。步骤如下：</p>
+<h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3><p>快重传的核心思想是要求接收端在收到失序的报文段后立刻发送对最新按序报文段的确认，不能推迟捎带确认。跟非快重传方式相比（可以对失序报文什么也不做），快重传能够及时让发送端意识到报文的丢失，不必等到计时器到时再重传相应报文。快重传算法规定，如果发送端连续收到三个重复的确认，就认为有报文丢失（被确认的下一个报文），然后重新发送。</p>
+<h3 id="快恢复"><a href="#快恢复" class="headerlink" title="快恢复"></a>快恢复</h3><p>快恢复通常配合快重传一起使用。步骤如下：</p>
 <ul>
 <li>发送端连续收到三个重复的确认后，执行“乘法减小”操作，将ssthresh减半。（丢失报文可能意味着网络状况变差）</li>
 <li>ssthresh减半后不降cwnd置为1个MSS，而是置为ssthresh，然后执行拥塞避免算法。因为三个连续的重复确认能够到达发送端，意味着可能没有阻塞。</li>
 </ul>
-<p><img src="/img/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/%E5%BF%AB%E6%81%A2%E5%A4%8D.jpg" alt="快恢复" title="快恢复"></p>
+<p><img src="/img/拥塞控制/快恢复.jpg" alt="快恢复" title="快恢复"></p>
 
       
     </div>
@@ -536,7 +529,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -607,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp协议中的拥塞控制"><span class="nav-number">1.</span> <span class="nav-text"> TCP协议中的拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要进行拥塞控制"><span class="nav-number">1.1.</span> <span class="nav-text"> 为什么要进行拥塞控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种具体的拥塞控制算法"><span class="nav-number">1.2.</span> <span class="nav-text"> 几种具体的拥塞控制算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慢开始"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 慢开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞避免"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 拥塞避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快重传"><span class="nav-number">1.2.3.</span> <span class="nav-text"> 快重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快恢复"><span class="nav-number">1.2.4.</span> <span class="nav-text"> 快恢复</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议中的拥塞控制"><span class="nav-number">1.</span> <span class="nav-text">TCP协议中的拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要进行拥塞控制"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要进行拥塞控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几种具体的拥塞控制算法"><span class="nav-number">1.2.</span> <span class="nav-text">几种具体的拥塞控制算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慢开始"><span class="nav-number">1.2.1.</span> <span class="nav-text">慢开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞避免"><span class="nav-number">1.2.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快重传"><span class="nav-number">1.2.3.</span> <span class="nav-text">快重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快恢复"><span class="nav-number">1.2.4.</span> <span class="nav-text">快恢复</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

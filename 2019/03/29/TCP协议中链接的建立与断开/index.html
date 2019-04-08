@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="TCP协议中链接的建立与断开 根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。  TCP协议中链接的建立 TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连">
+<meta name="description" content="TCP协议中链接的建立与断开根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。 TCP协议中链接的建立TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连接的成功">
 <meta name="keywords" content="Network programming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP协议中链接的建立与断开">
 <meta property="og:url" content="https://quanluli.github.io/2019/03/29/TCP协议中链接的建立与断开/index.html">
 <meta property="og:site_name" content="Luke的博客">
-<meta property="og:description" content="TCP协议中链接的建立与断开 根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。  TCP协议中链接的建立 TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连">
+<meta property="og:description" content="TCP协议中链接的建立与断开根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。 TCP协议中链接的建立TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连接的成功">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://quanluli.github.io/img/%E8%BF%9E%E6%8E%A5%E5%92%8C%E9%87%8A%E6%94%BE/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
+<meta property="og:image" content="https://quanluli.github.io/img/连接和释放/三次握手与四次挥手.jpg">
 <meta property="og:updated_time" content="2019-03-29T15:06:26.138Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP协议中链接的建立与断开">
-<meta name="twitter:description" content="TCP协议中链接的建立与断开 根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。  TCP协议中链接的建立 TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连">
-<meta name="twitter:image" content="https://quanluli.github.io/img/%E8%BF%9E%E6%8E%A5%E5%92%8C%E9%87%8A%E6%94%BE/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
+<meta name="twitter:description" content="TCP协议中链接的建立与断开根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。 TCP协议中链接的建立TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连接的成功">
+<meta name="twitter:image" content="https://quanluli.github.io/img/连接和释放/三次握手与四次挥手.jpg">
 
 
 
@@ -379,20 +379,16 @@
       
 
       
-        <h1 id="tcp协议中链接的建立与断开"><a class="markdownIt-Anchor" href="#tcp协议中链接的建立与断开"></a> TCP协议中链接的建立与断开</h1>
-<p>根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。</p>
-<h2 id="tcp协议中链接的建立"><a class="markdownIt-Anchor" href="#tcp协议中链接的建立"></a> TCP协议中链接的建立</h2>
-<p>TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连接的成功建立要经历三次握手。三次握手的主要目的就是初始化报文序号seq，并通知对方自己的初始sequence number。</p>
-<p><img src="/img/%E8%BF%9E%E6%8E%A5%E5%92%8C%E9%87%8A%E6%94%BE/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%8E%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="三次握手与四次挥手" title="三次握手与四次挥手"></p>
+        <h1 id="TCP协议中链接的建立与断开"><a href="#TCP协议中链接的建立与断开" class="headerlink" title="TCP协议中链接的建立与断开"></a>TCP协议中链接的建立与断开</h1><p>根据TCP协议，运输连接有三个阶段：连接的建立，数据传输和连接的释放。其中数据的传输部分主要又停止等待协议，流量控制和拥塞控制等主要内容，保证数据的可靠到达和网络的性能。连接的建立和释放同样有完整的过程，确保连接建立和释放的正确。</p>
+<h2 id="TCP协议中链接的建立"><a href="#TCP协议中链接的建立" class="headerlink" title="TCP协议中链接的建立"></a>TCP协议中链接的建立</h2><p>TCP采用的是client和server的模型，发起连接的一方是client，接受连接的一方是server。连接的成功建立要经历三次握手。三次握手的主要目的就是初始化报文序号seq，并通知对方自己的初始sequence number。</p>
+<p><img src="/img/连接和释放/三次握手与四次挥手.jpg" alt="三次握手与四次挥手" title="三次握手与四次挥手"></p>
 <ul>
 <li>第一次握手：在建立连接之前，server端需要先创建传输控制块TCB，是服务器的进程进入listen状态，准备好接受client发来的连接请求；client同样创建TCB，然后向server发送连接请求报文段，SYN报文段。SYN报文段中，SYN标志位被设为1，并选择一个 初始序号seq=x。SYN报文段不能携带数据但是要占用一个序号。发送SYN报文段之后，client进入SYN-SENT（同步已发送）状态</li>
 <li>第二次握手：server端接收到连接请求后，如果同意建立连接，就发送一个确认报文。在确认报文段中，ACK和SYN都置为1，确认号是初始序号加1，即x+1，确认报文的序号是server自己选择的初始序号。确认报文段也占一个序号并且不能携带数据。发送确认报文段后，server进入SYN-RCVD（同步收到）状态</li>
 <li>第三次握手：client在收到server的确认报文之后，还要对该确认报文进行确认，client向server发送一个确认报文，该报文中ACK标识位置为1，序号是x+1，确认序号是y+1。该确认报文可以携带数据，也可以不携带。如果不携带数据就不消耗序号。client发送出确认报文之后连接已经建立，client进入ESTABLISHED状态；server收到client的确认报文之后，也进入ESTABLISHED状态，连接建立</li>
 </ul>
-<h3 id="第三次握手的原因"><a class="markdownIt-Anchor" href="#第三次握手的原因"></a> 第三次握手的原因</h3>
-<p>client对server的确认报文进行确认的主要原因是<strong>防止已经失效的连接请求意外地到达server端</strong>。已失效的连接请求的产生原因可能是，client先发送了一个连接请求，但是在网络中某处延迟了，然后client重新发送连接请求，第二次的连接请求成功与server建立连接，然后在该连接断开后，第一个连接请求到达了server，导致server误认为client又发送了一次连接请求。如果没有第三次握手的机制，server就会单方面建立连接，等待client发来数据，导致资源浪费。因此，第三次握手是有必要的。</p>
-<h2 id="tcp协议中连接的释放"><a class="markdownIt-Anchor" href="#tcp协议中连接的释放"></a> TCP协议中连接的释放</h2>
-<p>断开连接过程中的四次挥手实际上是两次，因为TCP连接是全双工的，断开过程中client和server都需要发送FIN以及接收对方对FIN的确认，所以client发送FIN，server接收并确认，server发送FIN，client接收并确认，是一个对称的过程。client和server都可以主动断开连接。</p>
+<h3 id="第三次握手的原因"><a href="#第三次握手的原因" class="headerlink" title="第三次握手的原因"></a>第三次握手的原因</h3><p>client对server的确认报文进行确认的主要原因是<strong>防止已经失效的连接请求意外地到达server端</strong>。已失效的连接请求的产生原因可能是，client先发送了一个连接请求，但是在网络中某处延迟了，然后client重新发送连接请求，第二次的连接请求成功与server建立连接，然后在该连接断开后，第一个连接请求到达了server，导致server误认为client又发送了一次连接请求。如果没有第三次握手的机制，server就会单方面建立连接，等待client发来数据，导致资源浪费。因此，第三次握手是有必要的。</p>
+<h2 id="TCP协议中连接的释放"><a href="#TCP协议中连接的释放" class="headerlink" title="TCP协议中连接的释放"></a>TCP协议中连接的释放</h2><p>断开连接过程中的四次挥手实际上是两次，因为TCP连接是全双工的，断开过程中client和server都需要发送FIN以及接收对方对FIN的确认，所以client发送FIN，server接收并确认，server发送FIN，client接收并确认，是一个对称的过程。client和server都可以主动断开连接。</p>
 <p>假设client主动断开连接：</p>
 <ul>
 <li>第一次挥手： 此时client处于ESTABLISHED状态，client发送终止连接的报文，将FIN置为1，设序号seq=u。此时client进入FIN-WAIT-1状态。FIN报文段不携带数据但是要消耗一个序号</li>
@@ -400,14 +396,12 @@
 <li>第三次挥手： server如果没有要发送的数据，就向client发送FIN报文段，将FIN置为1，ACK置为1，并重复上一次发送过的确认号ack=u+1。发送后，server进入LAST-ACK状态</li>
 <li>第四次挥手： client在收到server的FIN报文段后，需要进行确认，发送确认报文段，将ACK置为1，确认号是收到的FIN序号加1.发送后进入TIME-WAIT阶段。server在收到确认后进入CLOSE状态。client的TIME-WAIT状态会持续2MSL（最长报文段寿命），由时间等待计时器计时。</li>
 </ul>
-<h3 id="time-wait状态的作用"><a class="markdownIt-Anchor" href="#time-wait状态的作用"></a> TIME-WAIT状态的作用</h3>
-<ul>
+<h3 id="TIME-WAIT状态的作用"><a href="#TIME-WAIT状态的作用" class="headerlink" title="TIME-WAIT状态的作用"></a>TIME-WAIT状态的作用</h3><ul>
 <li>保证自己的确认报文段能被对方成功接收。假如没有TIME-WAIT，而是直接断开连接，那么如果确认报文在网络中丢失或延迟，导致对方没有收到，对方会重新发送FIN报文，此时连接已断开，无法收到对方重发的FIN报文段，对方就无法按步骤进入CLOSED状态</li>
 <li>防止前面提到的已失效连接请求出现在本次连接中。这与连接建立的第三次握手起的作用一样，相当于双重保障。因为经过2MSL后，主动断开连接的一方发送的所有报文完全在网络中消失，确保之前发的连接请求也消失。</li>
 </ul>
 <p>因为被动方在收到ACK报文后立即进入CLOSED状态，因此被动方比主动方早进入CLOSED状态。</p>
-<h3 id="保活计时器"><a class="markdownIt-Anchor" href="#保活计时器"></a> 保活计时器</h3>
-<p>TCP连接会维护一个保活计时器，防止对方因为突发情况，没有按照正常的断开流程断开连接。通常server会在每次收到client的报文后重置保活计时器，一般等待时间是2小时。如果2小时内没有收到client的报文，则发送一个探测报文段，此后每隔75分钟发送一次，如果连续10个探测报文段都没有收到回应，则断开连接。</p>
+<h3 id="保活计时器"><a href="#保活计时器" class="headerlink" title="保活计时器"></a>保活计时器</h3><p>TCP连接会维护一个保活计时器，防止对方因为突发情况，没有按照正常的断开流程断开连接。通常server会在每次收到client的报文后重置保活计时器，一般等待时间是2小时。如果2小时内没有收到client的报文，则发送一个探测报文段，此后每隔75分钟发送一次，如果连续10个探测报文段都没有收到回应，则断开连接。</p>
 
       
     </div>
@@ -447,6 +441,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/06/C-中的虚函数/" rel="prev" title="C++中的虚函数">
+                C++中的虚函数 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,7 +525,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -598,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp协议中链接的建立与断开"><span class="nav-number">1.</span> <span class="nav-text"> TCP协议中链接的建立与断开</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp协议中链接的建立"><span class="nav-number">1.1.</span> <span class="nav-text"> TCP协议中链接的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第三次握手的原因"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 第三次握手的原因</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp协议中连接的释放"><span class="nav-number">1.2.</span> <span class="nav-text"> TCP协议中连接的释放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#time-wait状态的作用"><span class="nav-number">1.2.1.</span> <span class="nav-text"> TIME-WAIT状态的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保活计时器"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 保活计时器</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议中链接的建立与断开"><span class="nav-number">1.</span> <span class="nav-text">TCP协议中链接的建立与断开</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议中链接的建立"><span class="nav-number">1.1.</span> <span class="nav-text">TCP协议中链接的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第三次握手的原因"><span class="nav-number">1.1.1.</span> <span class="nav-text">第三次握手的原因</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议中连接的释放"><span class="nav-number">1.2.</span> <span class="nav-text">TCP协议中连接的释放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TIME-WAIT状态的作用"><span class="nav-number">1.2.1.</span> <span class="nav-text">TIME-WAIT状态的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保活计时器"><span class="nav-number">1.2.2.</span> <span class="nav-text">保活计时器</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
